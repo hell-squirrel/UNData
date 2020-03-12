@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Domain\Domain\Domain.csproj" />
+      <ProjectReference Include="..\..\IoC\IoC.csproj" />
+      <ProjectReference Include="..\..\Repository\Repository.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Http, Version=3.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.1.2\ref\netcoreapp3.1\Microsoft.Extensions.Http.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Extensions.Options, Version=3.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.1.2\ref\netcoreapp3.1\Microsoft.Extensions.Options.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Providers" />
+    </ItemGroup>
+
+</Project>

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Domain.Interfaces;
@@ -7,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repository.Implementation
 {
-    public class AnaliticsRepository : IAnalitics
+    public class AnalyticsRepository : IAnalitics
     {
         private readonly Context _context;
 
-        public AnaliticsRepository(Context context)
+        public AnalyticsRepository(Context context)
         {
             this._context = context;
         }
@@ -29,9 +30,14 @@ namespace Repository.Implementation
 
         public void SaveLocation(int locationId, string name)
         {
+            if (string.IsNullOrWhiteSpace(name) || this._context.Locations.Any(l=>l.Name == name))
+            {
+                throw new ApplicationException("Name is invalid or already exist!");
+            }
+            
             if (this._context.Locations.Any(l => l.LocationId == locationId))
             {
-                return;
+                throw new ApplicationException("Location already exist!");
             }
 
             this._context.Locations.Add(new Location() {Name = name, LocationId = locationId});

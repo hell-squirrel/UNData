@@ -5,16 +5,18 @@ namespace Repository
 {
     public class Context : DbContext
     {
+        public Context(DbContextOptions<Context> options):base(options)
+        {
+            
+        }
         public DbSet<Population> Population { get; set; }
 
         public DbSet<Location> Locations { get; set; }
 
         public DbSet<User> Users { get; set; }
-
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                @"Server=localhost,1433;Database=UnDataStore;user id=sa;pwd=<YourStrong!Passw0rd>;MultipleActiveResultSets=true;");
         }
     }
 }

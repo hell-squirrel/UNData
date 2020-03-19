@@ -14,9 +14,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
+using WebApplication.Midlware;
 
 namespace WebApplication
 {
@@ -31,6 +33,10 @@ namespace WebApplication
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Context>(builder =>
+                builder.UseSqlServer(
+                    @"Server=localhost,1433;Database=UnDataStore;user id=sa;pwd=<YourStrong!Passw0rd>;MultipleActiveResultSets=true;"));
+
             AppService.Module.Init();
             var deps = IoC.Manager.GetContainers();
             foreach (var dep in deps)
@@ -95,7 +101,6 @@ namespace WebApplication
                     } 
                 });
             });
-            
             services.AddAutoMapper(typeof(AppService.Module).GetTypeInfo().Assembly);
             services.AddTransient<IValidator<CreateUserModel>, UserValidator>();
             
@@ -112,7 +117,7 @@ namespace WebApplication
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseMiddleware<ExecutionTimeMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwagger();

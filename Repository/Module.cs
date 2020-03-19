@@ -10,7 +10,7 @@ namespace Repository
         public static void Init()
         {
             IoC.Manager.Register<DbContext,Context>();
-            IoC.Manager.Register<IAnalitics, AnaliticsRepository>();
+            IoC.Manager.Register<IAnalitics, AnalyticsRepository>();
             IoC.Manager.Register<IUser, UserRepository>();
         }
     }

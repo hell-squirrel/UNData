@@ -23,6 +23,10 @@ namespace Repository.Implementation
 
         public User Create(User newUser)
         {
+            if (_context.Users.Any(u=>u.Username == newUser.Username))
+            {
+                throw new ApplicationException("User with this name already exist!");
+            }
             var user  = this._context.Users.Add(newUser);
             this._context.SaveChanges();
             return user.Entity;

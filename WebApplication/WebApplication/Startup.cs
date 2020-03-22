@@ -33,9 +33,9 @@ namespace WebApplication
         
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<Context>(builder =>
-                builder.UseSqlServer(
-                    @"Server=localhost,1433;Database=UnDataStore;user id=sa;pwd=<YourStrong!Passw0rd>;MultipleActiveResultSets=true;"));
+                builder.UseSqlServer(connectionString));
 
             AppService.Module.Init();
             var deps = IoC.Manager.GetContainers();

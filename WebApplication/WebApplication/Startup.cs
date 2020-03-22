@@ -4,7 +4,6 @@ using AppService;
 using AppService.Models;
 using AppService.Validatiors;
 using AutoMapper;
-using Domain.Model;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -108,7 +107,7 @@ namespace WebApplication
                 .AddFluentValidation();
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {

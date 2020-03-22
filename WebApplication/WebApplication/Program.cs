@@ -1,11 +1,8 @@
-using System;
-using System.IO;
-using System.Reflection;
-using log4net;
-using log4net.Config;
 using Microsoft.AspNetCore.Hosting;
+using Serilog;
+using System;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog.Sinks.Elasticsearch;
 
 namespace WebApplication
 {
@@ -13,20 +10,28 @@ namespace WebApplication
     {
         public static void Main(string[] args)
         {
-            ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+            Log.Information("Starting...");
             CreateHostBuilder(args).Build().Run();
-        } 
+            Log.Information("Started Successfully");
+        }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostingContext, logging) =>
+                .UseSerilog((ctx, config) =>
                 {
-                    logging.AddLog4Net(new Log4NetProviderOptions
-                    {
-                        ExternalConfigurationSetup = true
-                    });
+                    config.ReadFrom.Configuration(ctx.Configuration);
+                    config.WriteTo.Elasticsearch(
+                        new ElasticsearchSinkOptions(
+                            new Uri(ctx.Configuration["ConnectionStrings:ElasticSearchConnection"]))
+                        {
+                            AutoRegisterTemplate = true,
+                            EmitEventFailure = 
+                                EmitEventFailureHandling.WriteToSelfLog |
+                                EmitEventFailureHandling.RaiseCallback|
+                                EmitEventFailureHandling.ThrowException,
+                            FailureCallback = e => { Log.Error("Unable to submit event " + e.MessageTemplate); }
+
+                        });
                 })
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
         

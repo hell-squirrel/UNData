@@ -56,7 +56,7 @@ namespace WebApplication.Controllers.v1
             }
             finally
             {
-                _logger.Log(LogLevel.Information, "User's token generated.");
+                _logger.LogInformation("User's token generated.");
             }
 
             return result;
@@ -101,7 +101,7 @@ namespace WebApplication.Controllers.v1
             }
             finally
             {
-                _logger.Log(LogLevel.Information, $"User created {result.Data.Username}");
+                _logger.LogInformation($"User created {result.Data.Username}");
             }
 
             return result;

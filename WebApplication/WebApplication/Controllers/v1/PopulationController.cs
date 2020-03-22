@@ -44,7 +44,7 @@ namespace WebApplication.Controllers.v1
             }
             finally
             {
-                _logger.Log(LogLevel.Information, $"Location for {location} retrieved.");
+                _logger.LogInformation($"Location for {location} retrieved.");
             }
 
             return result;
@@ -65,7 +65,7 @@ namespace WebApplication.Controllers.v1
             }
             finally
             {
-                _logger.Log(LogLevel.Information, $"Location retrieved from UN server.");
+                _logger.LogInformation($"Location retrieved from UN server.");
             }
 
             return result;

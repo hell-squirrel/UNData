@@ -9,5 +9,7 @@ namespace AppService.Providers.Interfaces
         public IList<Population> GetData(int location);
 
         public void LoadPopulation(DateTime startData,DateTime endDate);
+
+        
     }
 }

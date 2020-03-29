@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppService.Commands;
+using AppService.Interfaces;
 using AppService.Models;
 using AppService.Models.ViewModel;
 using AppService.Providers.Interfaces;
+using AppService.Queries;
 using AutoMapper;
 using Domain.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -22,11 +25,14 @@ namespace WebApplication.Controllers.v1
         private readonly IMapper _mapper;
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserProvider userProvider, IMapper mapper, ILogger<UsersController> logger)
+        private readonly IMediator _mediator;
+        
+        public UsersController(IUserProvider userProvider, IMapper mapper,IMediator mediator, ILogger<UsersController> logger)
         {
             _userProvider = userProvider;
             _mapper = mapper;
             _logger = logger;
+            _mediator = mediator;
         }
 
         [AllowAnonymous]
@@ -36,7 +42,8 @@ namespace WebApplication.Controllers.v1
             var result = new Result<UserView>();
             try
             {
-                var user = _userProvider.Authenticate(model.Username, model.Password);
+                var query = new AuthenticateQuery(model.Username,model.Password);
+                var user = this._mediator.Execute(query);
                 if (user != null)
                 {
                     result.Data = _mapper.Map<UserView>(user);

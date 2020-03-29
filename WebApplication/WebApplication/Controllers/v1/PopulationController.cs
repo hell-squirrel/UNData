@@ -51,12 +51,12 @@ namespace WebApplication.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<Result<string>> LoadData(DateTime startData, DateTime endDate)
+        public async Task<Result<string>> LoadData(DateTime startDate,DateTime endDate)
         {
             var result = new Result<string>();
             try
             {
-                this._populationProvider.LoadPopulation(startData, endDate);
+                this._populationProvider.LoadPopulation(startDate, endDate);
             }
             catch (Exception e)
             {

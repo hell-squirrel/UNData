@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AppService.Providers.Interfaces;
 using Domain.Interfaces;
 using Domain.Model;
+using Microsoft.Extensions.Options;
+using Nest;
 using Newtonsoft.Json.Linq;
 
 namespace AppService.Providers.mplementation
@@ -15,11 +17,13 @@ namespace AppService.Providers.mplementation
         private const string TimeFormat = "yyyy-MM-dd";
         private readonly IAnalitics _analitics;
         private readonly IHttpClientFactory _clientFactory;
+        private readonly IElasticClient _elasticClient;
+        private readonly ILocationProvider _locationProvider;
 
-        public PopulationProvider(IAnalitics analitics, IHttpClientFactory clientFactory)
+        public PopulationProvider(IAnalitics analitics, ILocationProvider locationProvider)
         {
             _analitics = analitics;
-            _clientFactory = clientFactory;
+            _locationProvider = locationProvider;
         }
 
         public IList<Population> GetData(int location)
@@ -41,8 +45,9 @@ namespace AppService.Providers.mplementation
             
             var locationId = this.GetLocationId(location);
             var locationName = this.GetLocationName(location);
-                
-            this._analitics.SaveLocation(locationId, locationName);
+            
+            this._locationProvider.SaveLocation(locationId,locationName);
+            
             population = population.Select(x =>MapPopulationWithLocation(x,locationId));
             this._analitics.SavePopulation(population);
         }

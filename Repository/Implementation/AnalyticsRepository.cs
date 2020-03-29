@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Domain.Interfaces;
 using Domain.Model;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,25 @@ namespace Repository.Implementation
 
             this._context.Locations.Add(new Location() {Name = name, LocationId = locationId});
             this._context.SaveChanges();
+        }
+
+        public Location GetLocation(int locationId)
+        {
+            return this._context.Locations.AsNoTracking().FirstOrDefault(x => x.LocationId == locationId);
+        }
+
+        public Location AddDescription(int locationId, string description)
+        {
+            var location = this._context.Locations.AsNoTracking().FirstOrDefault(x => x.LocationId == locationId);
+            if (location == null)
+            {
+                throw new ApplicationException("Cannot add location description.");
+            }
+
+            location.Description = description;
+            this._context.Update(location);
+            this._context.SaveChanges();
+            return location;
         }
     }
 }

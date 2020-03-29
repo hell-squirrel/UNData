@@ -9,5 +9,6 @@ namespace Domain.Model
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int LocationId { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

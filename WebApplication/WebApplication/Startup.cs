@@ -1,9 +1,11 @@
+using System;
 using System.Reflection;
 using System.Text;
 using AppService;
 using AppService.Models;
 using AppService.Validatiors;
 using AutoMapper;
+using Domain.Model;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,8 +18,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Repository;
+using Nest;
 using WebApplication.Midlware;
+using Context = Repository.Context;
 
 namespace WebApplication
 {
@@ -35,19 +38,16 @@ namespace WebApplication
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<Context>(builder =>
                 builder.UseSqlServer(connectionString));
-
+            
             AppService.Module.Init();
             var deps = IoC.Manager.GetContainers();
             foreach (var dep in deps)
             {
                 if (dep.Key == typeof(DbContext))
                 {
-                    services.AddDbContext<Context>();
+                    continue;
                 }
-                else
-                {
-                    services.AddTransient(dep.Key, dep.Value);
-                }
+                services.AddTransient(dep.Key, dep.Value);
 
             }
             services.AddHttpClient();

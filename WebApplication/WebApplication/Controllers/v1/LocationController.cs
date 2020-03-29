@@ -14,6 +14,7 @@ using Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebApplication.Attribute;
 
 namespace WebApplication.Controllers.v1
 {
@@ -35,6 +36,7 @@ namespace WebApplication.Controllers.v1
         }
 
         [HttpGet]
+        [TraceAspect]
         public async Task<Result<LocationView>> Get([FromQuery] int locationId)
         {
             var result = new Result<LocationView>();
@@ -58,6 +60,7 @@ namespace WebApplication.Controllers.v1
         }
 
         [HttpGet]
+        [TraceAspect]
         public async Task<Result<IEnumerable<LocationView>>> Search(string query, int page = 1, int pageSize = 5)
         {
             var result = new Result<IEnumerable<LocationView>>();
@@ -81,6 +84,7 @@ namespace WebApplication.Controllers.v1
         }
         
         [HttpPost]
+        [TraceAspect]
         public async Task<Result<LocationView>> AddDescription([FromForm]DescriptionRequestModel model)
         {
             var result = new Result<LocationView>();

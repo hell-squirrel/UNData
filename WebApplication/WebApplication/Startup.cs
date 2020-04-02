@@ -5,6 +5,7 @@ using AppService;
 using AppService.Models;
 using AppService.Validatiors;
 using AutoMapper;
+using Domain.Configs;
 using Domain.Model;
 using FluentValidation;
 using FluentValidation.AspNetCore;

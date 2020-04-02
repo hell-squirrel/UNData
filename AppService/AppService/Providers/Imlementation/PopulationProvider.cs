@@ -20,10 +20,11 @@ namespace AppService.Providers.mplementation
         private readonly IElasticClient _elasticClient;
         private readonly ILocationProvider _locationProvider;
 
-        public PopulationProvider(IAnalitics analitics, ILocationProvider locationProvider)
+        public PopulationProvider(IAnalitics analitics, ILocationProvider locationProvider,IHttpClientFactory clientFactory)
         {
             _analitics = analitics;
             _locationProvider = locationProvider;
+            _clientFactory = clientFactory;
         }
 
         public IList<Population> GetData(int location)

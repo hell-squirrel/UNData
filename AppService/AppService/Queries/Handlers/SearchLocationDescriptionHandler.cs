@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Domain.Configs;
 using Domain.Model;
 using Microsoft.Extensions.Options;
 using Nest;

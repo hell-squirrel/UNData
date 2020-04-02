@@ -1,5 +1,6 @@
 ﻿using System;
 using AppService.ElasticSearch;
+using Domain.Configs;
 using Domain.Model;
 using Microsoft.Extensions.Options;
 using Nest;

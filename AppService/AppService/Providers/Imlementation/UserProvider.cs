@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using AppService.Providers.Interfaces;
+using Domain.Configs;
 using Domain.Interfaces;
 using Domain.Model;
 using Microsoft.Extensions.Options;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Transactions;
 using AppService.ElasticSearch;
 using AppService.Providers.Interfaces;
+using Domain.Configs;
 using Domain.Interfaces;
 using Domain.Model;
 using Nest;

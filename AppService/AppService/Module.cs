@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AppService.Commands;
 using AppService.Commands.Handlers;
+using AppService.Decorators.Command;
 using AppService.ElasticSearch;
 using AppService.Interfaces;
 using AppService.Providers.Imlementation;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Transactions;
 using AppService.ElasticSearch;
+using Domain.Configs;
 using Domain.Interfaces;
 using Domain.Model;
 using Microsoft.Extensions.Options;
@@ -12,7 +13,6 @@ namespace AppService.Commands.Handlers
     {
         private readonly IAnalitics _analitics;
         private readonly IElasticClient _elasticClient;
-        private readonly AppSettings _appSettings;
         
         public AddLocationDescriptionHandler( IAnalitics analitics,IElasticProvider elasticProvider)
         {

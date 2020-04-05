@@ -4,6 +4,7 @@ using AppService.Commands.Handlers;
 using AppService.Decorators.Command;
 using AppService.ElasticSearch;
 using AppService.Interfaces;
+using AppService.MQ;
 using AppService.Providers.Imlementation;
 using AppService.Providers.Implementation;
 using AppService.Providers.Interfaces;
@@ -19,6 +20,7 @@ namespace AppService
         public static void Init()
         {
             Repository.Module.Init();
+            IoC.Manager.Register<IRabbitMQ,RabbitMQProvider>();
             IoC.Manager.Register<IUserProvider, UserProvider>();
             IoC.Manager.Register<ILocationProvider, LocationProvider>();
             IoC.Manager.Register<IPopulationProvider,PopulationProvider>();

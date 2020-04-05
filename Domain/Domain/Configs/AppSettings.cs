@@ -8,5 +8,8 @@
 
         public string MongoConnectionString { get; set; }
         public string MongoDatabaseName { get; set; }
+        public string MQHost { get; set; }
+
+        public string MQName { get; set; }
     }
 }

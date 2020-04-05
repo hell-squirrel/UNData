@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using System.Text;
 using AppService;
@@ -6,7 +5,6 @@ using AppService.Models;
 using AppService.Validatiors;
 using AutoMapper;
 using Domain.Configs;
-using Domain.Model;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,7 +17,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Nest;
 using WebApplication.Midlware;
 using Context = Repository.Context;
 
@@ -51,6 +48,7 @@ namespace WebApplication
                 services.AddTransient(dep.Key, dep.Value);
 
             }
+            services.AddHostedService<ElasticSearchService>();
             services.AddHttpClient();
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
